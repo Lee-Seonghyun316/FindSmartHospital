@@ -1,6 +1,12 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -23,12 +29,15 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
 //signIn
-export const signInGoogle = () => {
+export const googlesignIn = () => {
   const provider = new GoogleAuthProvider();
   return signInWithPopup(auth, provider);
 };
 
 // signOut
-export const signOut = () => {
+export const googleSignOut = () => {
   return signOut(auth);
 };
+
+export const onAuthChange = (handleAuthChange) =>
+  onAuthStateChanged(auth, handleAuthChange);

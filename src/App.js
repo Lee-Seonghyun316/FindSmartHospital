@@ -7,10 +7,8 @@ import { theme } from "./theme";
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState();
-
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} logout={false}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

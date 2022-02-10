@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHospital } from "@fortawesome/free-solid-svg-icons";
 import HospitalImg from "../img/hospital.png";
-import { signInGoogle } from "../service/firebase";
+import { googlesignIn } from "../service/firebase";
 import { useNavigate } from "react-router-dom";
+import Container from "./Container";
+
+const desText = "iot 센서를 이용하여 병원별 혼잡도를 측정합니다. ";
 
 const Home = () => {
   let navigate = useNavigate();
@@ -12,68 +13,25 @@ const Home = () => {
     navigate(`/hospitals`, { state: { id: userId } });
   };
   const handleSignIn = () => {
-    signInGoogle().then((result) => goHospitals(result.user.displayName));
+
+    googlesignIn().then((result) => goHospitals(result.user.displayName));
   };
 
   return (
-    <Wrap>
-      <Nav>
-        <FontAwesomeIcon icon={faHospital} />
-        FindSmartHospital
-      </Nav>
-      <Des>iot 센서를 이용하여 병원별 혼잡도를 측정합니다. </Des>
-      <Intro>
-        <TextContainer>
-          <Title>FindSmartHospital</Title>
-          병원 혼잡도 및 코로나 검사 여부 정보까지
-          <Button onClick={handleSignIn}>google 로그인</Button>
-        </TextContainer>
-        <ImgContainer>
-          <Img src={HospitalImg} />
-        </ImgContainer>
-      </Intro>
-    </Wrap>
+    <Container text={desText}>
+      <TextContainer>
+        <Title>FindSmartHospital</Title>
+        병원 혼잡도 및 코로나 검사 여부 정보까지
+        <Button onClick={handleSignIn}>google 로그인</Button>
+      </TextContainer>
+      <ImgContainer>
+        <Img src={HospitalImg} />
+      </ImgContainer>
+    </Container>
   );
 };
 
 export default Home;
-
-const Wrap = styled.div`
-  height: 100vh;
-  width: 100vw;
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: ${({ theme }) => theme.color.orange};
-  font-weight: 700;
-  padding: 15px;
-`;
-
-const Des = styled.div`
-  background-color: ${({ theme }) => theme.color.darkOrange};
-  color: ${({ theme }) => theme.color.white};
-  font-weight: 500;
-  padding: 10px;
-`;
-
-const Intro = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  height: 100%;
-  background-color: ${({ theme }) => theme.color.lightOrange};
-  @media ${({ theme }) => theme.device.tablet} {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 30px;
-    overflow: hidden;
-  }
-`;
 
 const TextContainer = styled.div`
   display: flex;
