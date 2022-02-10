@@ -54,6 +54,13 @@ const Intro = styled.div`
   justify-content: space-around;
   height: 100%;
   background-color: ${({ theme }) => theme.color.lightOrange};
+  @media ${({ theme }) => theme.device.tablet} {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 30px;
+    overflow: hidden;
+  }
 `;
 
 const TextContainer = styled.div`
@@ -68,9 +75,19 @@ const TextContainer = styled.div`
   font-weight: 600;
 `;
 
-const ImgContainer = styled.div``;
+const ImgContainer = styled.div`
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+`;
 
-const Img = styled.img``;
+const Img = styled.img`
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 500px;
+  }
+`;
 
 const Title = styled.h1`
   font-size: 3rem;
