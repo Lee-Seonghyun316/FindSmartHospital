@@ -3,7 +3,7 @@ import XMLParser from "react-xml-parser";
 import Container from "./Container";
 import { useNavigate } from "react-router-dom";
 import { onAuthChange } from "../service/firebase";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseChimneyMedical } from "@fortawesome/free-solid-svg-icons";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
@@ -76,6 +76,20 @@ const Hospitals = () => {
                   : children.length === 13
                   ? children[11].value
                   : children[13].value}
+                <Button
+                  onClick={() => {
+                    alert("해당 병원으로 예약되었습니다. (1개의 병원만 예약가능)");
+                    setReservation(
+                      children.length === 11
+                        ? children[9].value
+                        : children.length === 13
+                        ? children[11].value
+                        : children[13].value
+                    );
+                  }}
+                >
+                  예약하기
+                </Button>
               </Title>
               PCR 검사여부:
               {children[2].value}
@@ -192,12 +206,23 @@ const Hospital = styled.div`
   background-color: ${({ theme }) => theme.color.white};
   padding: 20px;
 `;
+
+const Button = styled.button`
+  background-color: ${({ theme }) => theme.color.darkOrange};
+  color: ${({ theme }) => theme.color.white};
+  border: none;
+  border-radius: 10px;
+  padding: 3px 10px;
+  cursor: pointer;
+`;
+
 const Title = styled.h1`
   display: flex;
   gap: 10px;
   font-size: 17px;
   font-weight: 600;
   margin-bottom: 10px;
+  align-items: center;
 `;
 const Address = styled.p`
   color: grey;
