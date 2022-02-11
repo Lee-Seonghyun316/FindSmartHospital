@@ -1,3 +1,4 @@
+import { getDatabase, ref, set, remove, onValue, off, get } from "firebase/database";
 import React, { useCallback, useEffect, useState } from "react";
 import XMLParser from "react-xml-parser";
 import Container from "./Container";
@@ -8,8 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseChimneyMedical } from "@fortawesome/free-solid-svg-icons";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import ScaleLoader from "react-spinners/ScaleLoader";
-
 const desText = "병원정보를 확인하세요. ";
+
 
 const Hospitals = () => {
   const navigate = useNavigate();
@@ -18,7 +19,8 @@ const Hospitals = () => {
   const [hospitals, setHospitals] = useState();
   const [loading, setLoading] = useState(true);
   const [reservation, setReservation] = useState("");
-
+  const[cnt,setCnt] = useState(0);
+  
   useEffect(() => {
     onAuthChange((user) => {
       if (user) {
@@ -42,12 +44,13 @@ const Hospitals = () => {
   useEffect(() => {
     fetch(
       "https://cors-anywhere.herokuapp.com/http://apis.data.go.kr/B551182/rprtHospService/getRprtHospService?serviceKey=KFpltfvLCQrqqBhzue4pwPwMO3F75DdoemMKE0Oaqibiq1Ejx0FFTxaTiPtdfQ0zsze30RtPqon1pKifxQzEUw%3D%3D&pageNo=1&numOfRows=10",
+      
       requestOptions
     )
       .then((response) => response.text())
       .then((data) => {
         console.log(data);
-        setHospitals(parseStr(data));
+        setHospitals(parseStr(data))
         setLoading(false);
       })
       .catch((error) => console.log("error", error));
@@ -56,13 +59,37 @@ const Hospitals = () => {
   const parseStr = (dataSet) => {
     const dataArr = new XMLParser().parseFromString(dataSet).children[1]
       .children[0].children;
-    console.log(dataArr);
     if (dataArr) {
       return dataArr;
     } else return null;
   };
 
+  useEffect(() => {
+    const db = getDatabase();
+    const hospital_code = "JDQ4MTAxMiM1MSMkMiMkMCMkMDAkNDgxOTYxIzMxIyQxIyQzIyQxMyQyNjEwMDIjNjEjJDEjJDgjJDgz";
+  
+    console.log('================ radar센서의 데이터를 불러옵니다 : getcount======');
+    const dbref = ref(db,`hospital_code/${hospital_code}`);
+    get(dbref).then((snap)=>
+    {
+      console.log(snap.val());
+      const counts =[]
+      for (const i in snap.val()) {
+        console.log(snap.val()[i].count);
+        counts.push(snap.val()[i].count); 
+      }
+      console.log(counts);
+      console.log(counts[(counts.length)-1]);
+      setCnt(counts[(counts.length)-1]);
+      
+
+    });
+  });
+
+
+
   const makeTable = useCallback(() => {
+    console.log(hospitals[0].children[10].value, "hospitals-code");
     console.log(hospitals[0].children[0].value, "hospitals");
     return (
       <HospitalsContainer>
@@ -97,7 +124,7 @@ const Hospitals = () => {
               신속항원검사여부:
               {children[3].value}
               <Address>주소: {children[0].value}</Address>
-              <Congestion>대기실 인원 : {`${10}명`}</Congestion>
+              <Congestion>대기실 인원 : {`${cnt}명`}</Congestion>
             </Hospital>
           </Hospital>
         ))}

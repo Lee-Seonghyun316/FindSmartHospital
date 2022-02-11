@@ -175,5 +175,5 @@ function ws_message_action(jsonObj) {
   const message = radar_data["m2m:dbg"].message;
   console.log(message);
   //firebaseDB.ref('/').remove(); // 가장 최근의 데이터만 필요하기때문에 이젠 데이터 내용은 지움.
-  firebaseDB.ref("/").child("data").push(message);
+  firebaseDB.ref("/").child("hospital_code/JDQ4MTAxMiM1MSMkMiMkMCMkMDAkNDgxOTYxIzMxIyQxIyQzIyQxMyQyNjEwMDIjNjEjJDEjJDgjJDgz/").push(message);
 }
