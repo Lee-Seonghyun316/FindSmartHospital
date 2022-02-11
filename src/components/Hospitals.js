@@ -113,29 +113,39 @@ const Hospitals = () => {
 export default Hospitals;
 
 const Wrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  position: relative;
+  margin-top: 100px;
   @media ${({ theme }) => theme.device.tablet} {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    overflow: hidden;
   }
 `;
 
 const Reservation = styled.div`
-  margin: 40px;
+  position: fixed;
+  top: 120px;
+  right: 30px;
+  padding: 20px;
+  width: 450px;
+  border-radius: 10px;
+  border: 1px solid ${({ theme }) => theme.color.lightGray};
+  background-color: ${({ theme }) => theme.color.white};
+  @media ${({ theme }) => theme.device.tablet} {
+    position: initial;
+    width: 90%;
+  }
 `;
 
 const Des = styled.div`
   gap: 10px;
   flex-direction: column;
-  background-color: #f0eeee;
+  background-color: ${({ theme }) => theme.color.lightGray};
   border-radius: 10px;
   padding: 20px;
   display: flex;
-  color: grey;
+  color: gray;
   font-size: 15px;
   margin-bottom: 40px;
 `;
@@ -143,12 +153,17 @@ const Des = styled.div`
 const DesTitle = styled.div`
   display: flex;
   gap: 10px;
-  color: ${({ theme }) => theme.color.black};
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 700;
+  color: black;
 `;
 
-const HospitalsContainer = styled.div``;
+const HospitalsContainer = styled.div`
+  width: 50%;
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 100%;
+  }
+`;
 
 const Hospital = styled.div`
   display: flex;

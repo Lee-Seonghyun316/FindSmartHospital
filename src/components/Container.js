@@ -10,12 +10,14 @@ const Container = ({ children, text, logout }) => {
   };
   return (
     <Wrap>
-      <Nav>
-        <FontAwesomeIcon icon={faHospital} />
-        FindSmartHospital
-        {logout && <Button onClick={onLogout}>로그아웃</Button>}
-      </Nav>
-      <Des>{text}</Des>
+      <Header>
+        <Nav>
+          <FontAwesomeIcon icon={faHospital} />
+          FindSmartHospital
+          {logout && <Button onClick={onLogout}>로그아웃</Button>}
+        </Nav>
+        <Des>{text}</Des>
+      </Header>
       {children}
     </Wrap>
   );
@@ -28,7 +30,16 @@ const Wrap = styled.div`
   width: 100vw;
 `;
 
+const Header = styled.div`
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+`;
+
 const Nav = styled.nav`
+  background-color: ${({ theme }) => theme.color.white};
   display: flex;
   align-items: center;
   gap: 10px;
