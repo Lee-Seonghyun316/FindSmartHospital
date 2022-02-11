@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+## Description
+호흡기 진료 지정 의료기관 정보 공공 데이터와 iot 레이더 센서 데이터를 이용해 병원의 혼잡도를 파악하고, 병원별 pcr 검사와 신속항원검사 여부에 대해 알려주는 반응형 웹입니다. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- React
+- CSS : styled-component, theme
+- 로그인: firebase auth
+- 페이지 이동 : react-router
+- 로딩처리 : react-spinners
 
-## Available Scripts
+## Usage(자세한 실행 방법)
 
-In the project directory, you can run:
+1. git clone
+```
+git clone https://github.com/Lee-Seonghyun316/FindSmartHospital.git
+```
+2. FindSmartHospital 폴더를 인터프린터나 컴파일러로 열기 
+3. 필요한 라이브러리 설치 
+```
+npm install
+```
+4. 실행
+```
+npm run start
+```
 
-### `npm start`
+## 구현한 방법과 이유에 대한 간략한 내용
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### App.js
+- 페이지 이동 : 리액트 라우터 설정
+- CSS : theme 설정
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### theme.js
+- 자주사용한 값 설정
+- 반응형 : 미디어 쿼리 객체 추가
 
-### `npm test`
+### App.css
+- css reset
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## /components
 
-### `npm run build`
+### Home.js
+사용자에게 간단한 설명을 제공하고 로그인을 할 수 있는 메인페이지
+- goHospitals : 병원 정보 확인페이지로 이동 및 userId 상태를 전달
+- handleSignIn : firebase 이용 로그인 함수
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Hospitals.js
+병원정보를 확인하고 예약을 진행할 수 있는페이지
+- useState로 필요한 상태관리
+- onAuthChange : 로그인여부 확인
+- fetch 이용하여 외부 공공 데이터 받기
+- parseStr : XML 형식 json으로 변환하고, 데이터 가공
+- makeTable : 데이터셋 만들어지면, 사용자에게 보여줄 병원정보 table 생성
+( iot 센서로 카운트한 대기실 인원 정보 필요)
+- 데이터 없을 때, 로딩처리
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## /radar
+iot 센서에서 받아온 데이터 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## /Service
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### firebase.js
+firebase auth 세팅 및 로그인 로그아웃 onChange 함수 생성
