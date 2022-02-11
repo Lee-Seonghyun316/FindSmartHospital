@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
+import "./App.css";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./theme";
 import Home from "./components/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Hospitals from "./components/Hospitals";
-import { ThemeProvider } from "styled-components";
-import { theme } from "./theme";
-import "./App.css";
 
 function App() {
   return (
