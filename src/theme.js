@@ -7,6 +7,7 @@ const color = {
   darkYellow: "#c78f00",
   white: "#fff",
   black: "#020202",
+  lightGray: "#f0eeee",
 };
 
 const deviceSizes = {
