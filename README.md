@@ -39,14 +39,18 @@ npm run start
 ## /components
 
 ### Home.js
+
 <img width="1440" alt="스크린샷 2022-02-11 오후 3 44 34" src="https://user-images.githubusercontent.com/70502670/153550849-c3f0c534-2ebb-46d5-a26c-5832547b17d3.png">
+
 사용자에게 간단한 설명을 제공하고 로그인을 할 수 있는 메인페이지
 - goHospitals : 병원 정보 확인페이지로 이동 및 userId 상태를 전달
 - handleSignIn : firebase 이용 로그인 함수
 
 ### Hospitals.js
+
 <img width="1440" alt="스크린샷 2022-02-11 오후 3 44 23" src="https://user-images.githubusercontent.com/70502670/153550861-2d746ae1-1230-4ee5-b155-af77e3268448.png">
 <img width="1440" alt="스크린샷 2022-02-11 오후 3 44 26" src="https://user-images.githubusercontent.com/70502670/153550883-28b9cdc2-edd7-413d-9794-819ff98454df.png">
+
 병원정보를 확인하고 예약을 진행할 수 있는페이지
 - useState로 필요한 상태관리
 - onAuthChange : 로그인여부 확인
