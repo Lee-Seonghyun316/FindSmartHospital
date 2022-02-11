@@ -56,6 +56,7 @@ const Button = styled.button`
   padding: 3px 10px;
   position: absolute;
   right: 15px;
+  cursor: pointer;
 `;
 
 const Des = styled.div`

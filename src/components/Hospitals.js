@@ -3,10 +3,11 @@ import XMLParser from "react-xml-parser";
 import Container from "./Container";
 import { useNavigate } from "react-router-dom";
 import { onAuthChange } from "../service/firebase";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseChimneyMedical } from "@fortawesome/free-solid-svg-icons";
 import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 const desText = "병원정보를 확인하세요. ";
 
@@ -104,13 +105,32 @@ const Hospitals = () => {
           <Title>{userId}님의 예약내역</Title>
           {reservation === "" ? "예약 내역 없음" : reservation}
         </Reservation>
-        {loading ? "loading..." : makeTable()}
+        {loading ? (
+          <LoadingContainer>
+            loading...
+            <br />
+            <ScaleLoader height="160" width="32" color="#f27119" radius="8" />
+          </LoadingContainer>
+        ) : (
+          makeTable()
+        )}
       </Wrap>
     </Container>
   );
 };
 
 export default Hospitals;
+
+const LoadingContainer = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${({ theme }) => theme.color.orange};
+  font-weight: 600;
+  font-size: 2rem;
+  padding: 40px 0;
+`;
 
 const Wrap = styled.div`
   position: relative;
