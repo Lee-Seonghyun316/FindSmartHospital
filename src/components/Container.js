@@ -16,7 +16,7 @@ const Container = ({ children, text, logout }) => {
         {logout && <Button onClick={onLogout}>로그아웃</Button>}
       </Nav>
       <Des>{text}</Des>
-      <Content>{children}</Content>
+      {children}
     </Wrap>
   );
 };
@@ -52,20 +52,4 @@ const Des = styled.div`
   color: ${({ theme }) => theme.color.white};
   font-weight: 500;
   padding: 10px;
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  height: 100%;
-  background-color: ${({ theme }) => theme.color.lightOrange};
-  @media ${({ theme }) => theme.device.tablet} {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 30px;
-    overflow: hidden;
-  }
 `;

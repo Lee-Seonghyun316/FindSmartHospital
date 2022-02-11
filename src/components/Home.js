@@ -13,25 +13,42 @@ const Home = () => {
     navigate(`/hospitals`, { state: { id: userId } });
   };
   const handleSignIn = () => {
-
     googlesignIn().then((result) => goHospitals(result.user.displayName));
   };
 
   return (
     <Container text={desText}>
-      <TextContainer>
-        <Title>FindSmartHospital</Title>
-        병원 혼잡도 및 코로나 검사 여부 정보까지
-        <Button onClick={handleSignIn}>google 로그인</Button>
-      </TextContainer>
-      <ImgContainer>
-        <Img src={HospitalImg} />
-      </ImgContainer>
+      <Content>
+        <TextContainer>
+          <Title>FindSmartHospital</Title>
+          병원 혼잡도 및 코로나 검사 여부 정보까지
+          <Button onClick={handleSignIn}>google 로그인</Button>
+        </TextContainer>
+        <ImgContainer>
+          <Img src={HospitalImg} />
+        </ImgContainer>
+      </Content>
     </Container>
   );
 };
 
 export default Home;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  background-color: ${({ theme }) => theme.color.lightOrange};
+  @media ${({ theme }) => theme.device.tablet} {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 30px;
+    overflow: hidden;
+  }
+`;
 
 const TextContainer = styled.div`
   display: flex;
