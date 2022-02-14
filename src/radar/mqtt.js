@@ -30,7 +30,6 @@ const MQTT = () => {
 
     mqtt_client.on('connect', function () {
         mqtt_client.subscribe(resp_topic);
-        console.log('subscribe resp_topic as ' + resp_topic);
 
         sh_state = 'connecting';
     });
@@ -54,7 +53,6 @@ const MQTT = () => {
             sh_state = 'ready'
 
             mqtt_client.publish(req_topic, JSON.stringify(req_message['m2m:rqp']));
-            console.log('mqtt (json) : ' + req_topic + ' : ' + JSON.stringify(req_message['m2m:rqp']) + ' ---->');
         }
     }
 
@@ -69,13 +67,11 @@ const MQTT = () => {
             }
 
             if (jsonObj['m2m:dbg'].status === 'ERROR') {
-                console.log(jsonObj);
                 sh_state = 'connecting';
             }
             else
             if (jsonObj['m2m:dbg'].status  === 'SUCCESS' &&
                 jsonObj['m2m:dbg'].message === 'CONNECT'  ) {
-                console.log('MQTT server connect OK');
                 sh_state = 'ready';
             }
             else
@@ -85,15 +81,6 @@ const MQTT = () => {
     }
 
     function mqtt_message_action(jsonObj) {
-
-        /////////////////////////////////////////////////////////////////////////
-        // 수신된 데이터 처리부분.
-        /////////////////////////////////////////////////////////////////////////
-        console.log('================================================================');
-        console.log(JSON.stringify(jsonObj));
-        console.log('----------------------------------------------------------------');
-        console.log(jsonObj);
-
         return jsonObj;
     }
 

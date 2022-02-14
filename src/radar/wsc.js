@@ -26,11 +26,9 @@ var usebtswsport = "3233"; //  테스트베드 port입니다.
 var usebtswslocaluserid = "qsoojinq@naver.com"; //  테스트베드에 등록된 사용자입니다.
 
 var sh_state = "connect";
-console.log(sh_state);
 
 var ifaces = os.networkInterfaces();
 
-console.log(ifaces);
 
 for (var dev in ifaces) {
   var iface = ifaces[dev].filter(function (details) {
@@ -39,16 +37,13 @@ for (var dev in ifaces) {
 
   if (iface.length > 0) {
     usebtswslocalip = iface[0].address;
-    console.log("local ip address : " + usebtswslocalip);
   }
 }
 
 function ws_watchdog() {
   if (sh_state == "connect") {
     ws_connect(usebtswshost);
-    console.log("______connect");
   } else if (sh_state == "connecting") {
-    console.log("--------------------------connecting");
     var req_message = {};
     req_message["m2m:rqp"] = {};
     req_message["m2m:rqp"] = {};
@@ -58,9 +53,6 @@ function ws_watchdog() {
     sh_state = "ready";
 
     ws_connection.sendUTF(JSON.stringify(req_message["m2m:rqp"]));
-    console.log(
-      "websocket (json) " + JSON.stringify(req_message["m2m:rqp"]) + " ---->"
-    );
   }
 }
 
@@ -71,32 +63,25 @@ wdt.set_wdt(require("shortid").generate(), 1, ws_watchdog);
 function ws_connect(ws_ip) {
   ws_client = new WebSocketClient();
 
-  // console.log(ws_client);
 
   protocol = "onem2m.r2.0.json";
 
   ws_client.connect("ws://" + ws_ip + ":" + usebtswsport, protocol);
-  //  console.log(ws_client);
 
   ws_client.on("connectFailed", function (error) {
-    console.log("(---------------------------connecting error)");
-    console.log("Connect Error: " + error.toString());
     ws_client.removeAllListeners();
 
     sh_state = "connect";
   });
 
   ws_client.on("connect", function (connection) {
-    console.log("----------------------------WebSocket Client Connected");
     ws_connection = connection;
     sh_state = "connecting";
 
     connection.on("error", function (error) {
-      console.log("Connection Error: " + error.toString());
       sh_state = "connect";
     });
     connection.on("close", function () {
-      console.log("echo-protocol Connection Closed");
       sh_state = "connect";
     });
 
@@ -106,27 +91,23 @@ function ws_connect(ws_ip) {
 
 function ws_message_handler(message) {
   if (message.type === "utf8") {
-    console.log('"""""""""""""""""""""""""""here');
 
     var protocol_arr = this.protocol.split(".");
     var bodytype = protocol_arr[protocol_arr.length - 1];
 
     var jsonObj = JSON.parse(message.utf8Data.toString());
 
-    //console.log(jsonObj['m2m:dbg']);
 
     if (jsonObj["m2m:dbg"] == null) {
       jsonObj["m2m:dbg"] = jsonObj;
     }
 
     if (jsonObj["m2m:dbg"].status === "ERROR") {
-      console.log(jsonObj);
       sh_state = "connect";
     } else if (
       jsonObj["m2m:dbg"].status === "SUCCESS" &&
       jsonObj["m2m:dbg"].message === "CONNECT"
     ) {
-      console.log("Socket server connect OK");
       sh_state = "ready";
 
       // 사람이 지나가지 않을 때이지만 데이터가 잘 넣어지는지 확인하고 싶을 때 아래의 주석을 풀어서 확인.
@@ -153,13 +134,6 @@ function ws_message_action(jsonObj) {
   /////////////////////////////////////////////////////////////////////////
   // 수신된 데이터 처리부분.
   /////////////////////////////////////////////////////////////////////////
-  console.log(
-    "================================================================"
-  );
-  console.log(JSON.stringify(jsonObj));
-  console.log(
-    "----------------------------------------------------------------"
-  );
 
   const radar_data = jsonObj;
 
@@ -169,11 +143,9 @@ function ws_message_action(jsonObj) {
   radar_data["m2m:dbg"].message.SenValue = senvalue; // 기존의 SenValue string값을 obj로 변경한 것을 저장
   radar_data["m2m:dbg"]["message"]["count"] =
     radar_data["m2m:dbg"].message.SenValue.length; // count속성을 추가해서 배열의 길이를 카운팅된 객체로 저장.
-  console.log(radar_data["m2m:dbg"].message.count, "wsc.js 에서 count 수 찍기");
 
   //2. firebase에 message값을 저장
   const message = radar_data["m2m:dbg"].message;
-  console.log(message);
   //firebaseDB.ref('/').remove(); // 가장 최근의 데이터만 필요하기때문에 이젠 데이터 내용은 지움.
   firebaseDB.ref("/").child("hospital_code/JDQ4MTAxMiM1MSMkMiMkMCMkMDAkNDgxOTYxIzMxIyQxIyQzIyQxMyQyNjEwMDIjNjEjJDEjJDgjJDgz/").push(message);
 }
